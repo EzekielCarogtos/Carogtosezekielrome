@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Digital Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFEFD2;
+      --secondary: #6AB0AF;
+      --secondary-dark: #386D6C;
+      --text: #172033;
+      --muted: #64748b;
+      --surface: #ffffff;
+      --background: var(--primary);
+      --line: #e8ddc8;
+      --shadow: 0 16px 40px rgba(106, 176, 175, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
+      background: var(--background);
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand span {
+      color: var(--secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--secondary-dark);
+    }
+
+    section {
+      scroll-margin-top: 92px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 72px 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 72px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: var(--secondary-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 700px;
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border: 1px solid var(--secondary);
+      border-radius: 10px;
+      background: var(--secondary);
+      color: var(--text);
+      font-weight: 800;
+      transition: 180ms ease;
+    }
+
+    .button:hover {
+      background: var(--secondary-dark);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      background: var(--surface);
+      color: var(--secondary-dark);
+    }
+
+    .button-secondary:hover {
+      background: var(--primary);
+    }
+
+    .profile-card {
+      position: relative;
+      max-width: 420px;
+      justify-self: end;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      inset: 22px -22px -22px 22px;
+      z-index: -1;
+      border-radius: 28px;
+      background: var(--primary);
+    }
+
+    .profile-photo {
+      aspect-ratio: 4 / 5;
+      width: 100%;
+      border: 10px solid var(--surface);
+      border-radius: 26px;
+      background: linear-gradient(145deg, var(--primary), #fffaf0);
+      box-shadow: var(--shadow);
+      object-fit: cover;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .section-header {
+      max-width: 700px;
+      margin-bottom: 42px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+    }
+
+    .skills-grid,
+    .cert-grid,
+    .contact-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .skill-card,
+    .cert-card,
+    .contact-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .skill-card {
+      padding: 28px 24px;
+    }
+
+    .skill-number {
+      display: block;
+      color: var(--secondary-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .skill-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .language-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+    }
+
+    .skill-heading h3 {
+      font-size: 1.12rem;
+    }
+
+    .skill-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .certifications {
+      background: var(--surface);
+    }
+
+    .cert-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cert-card {
+      overflow: hidden;
+    }
+
+    .cert-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #e8eef7;
+      object-fit: cover;
+    }
+
+    .cert-content {
+      padding: 22px;
+    }
+
+    .cert-content h3 {
+      margin-bottom: 6px;
+    }
+
+    .cert-content p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .contact-grid {
+      grid-template-columns: 0.75fr 1.25fr;
+    }
+
+    .contact-panel {
+      padding: 32px;
+    }
+
+    .contact-details {
+      display: grid;
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .contact-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 175, 0.2);
+    }
+
+    textarea {
+      min-height: 145px;
+      resize: vertical;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-card {
+        max-width: 360px;
+        justify-self: start;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .nav-inner {
+        min-height: 64px;
+      }
+
+      .nav-links {
+        gap: 14px;
+        font-size: 0.82rem;
+      }
+
+      .nav-links li:first-child {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 52px 0 72px;
+      }
+
+      .hero-grid {
+        gap: 48px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 15vw, 4.2rem);
+      }
+
+      .profile-card {
+        max-width: 310px;
+        width: calc(100% - 18px);
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .skills-grid,
+      .cert-grid,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-panel {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a class="brand" href="#home">Ezekiel<span>Rome</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Hello, I am</span>
+          <h1>Ezekiel Rome V. Carogtos</h1>
+          <p class="hero-copy">
+            An aspiring 4th year student of Bachelor of Science in Information Technology at the University of Mindanao, Davao City. I am passionate about web development and eager to contribute my skills to real-world projects.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#contact">Contact Me</a>
+            <a class="button button-secondary" href="#skills">View My Skills</a>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <img class="profile-photo" src="profile.jpg" alt="Profile">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">Programming Languages</span>
+          <h2>My Technical Skills</h2>
+        </header>
+
+        <div class="skills-grid">
+          <article class="skill-card">
+            <span class="skill-number">01</span>
+            <div class="skill-heading">
+              <svg class="language-icon" viewBox="0 0 48 48" role="img" aria-label="HTML5 icon">
+                <path fill="#E44D26" d="M7 3h34l-3.1 35.1L24 45 10.1 38.1 7 3z"/>
+                <path fill="#F16529" d="M24 6h13.2l-2.5 29.5L24 40.7V6z"/>
+                <path fill="#EBEBEB" d="M14.2 12h19.6l-.6 4.8H19.5l.4 4.8h12.9l-1.1 11.6-7.7 2.4-7.7-2.4-.5-6.2h4.8l.3 2.7 3.1 1 3.1-1 .4-3.4H15.9L14.2 12z"/>
+                <path fill="#fff" d="M24 12h9.8l-.6 4.8H24v-4.8zm0 9.6h8.8l-1.1 11.6-7.7 2.4v-5l3.1-1 .4-3.4H24v-4.6z"/>
+              </svg>
+              <h3>HTML</h3>
+            </div>
+            <p>Structure clear, accessible content for the web.</p>
+          </article>
+          <article class="skill-card">
+            <span class="skill-number">02</span>
+            <div class="skill-heading">
+              <svg class="language-icon" viewBox="0 0 48 48" role="img" aria-label="CSS3 icon">
+                <path fill="#1572B6" d="M7 3h34l-3.1 35.1L24 45 10.1 38.1 7 3z"/>
+                <path fill="#33A9DC" d="M24 6h13.2l-2.5 29.5L24 40.7V6z"/>
+                <path fill="#EBEBEB" d="M14 12h20l-.5 4.8H19.2l.4 4.8h13.4l-1.2 11.6L24 35.7l-7.8-2.5-.5-6.1h4.8l.3 2.7 3.2 1 3.2-1 .4-3.4H15.7L14 12z"/>
+                <path fill="#fff" d="M24 12h10l-.5 4.8H24v-4.8zm0 9.6h9l-1.2 11.6L24 35.7v-5l3.2-1 .4-3.4H24v-4.7z"/>
+              </svg>
+              <h3>CSS</h3>
+            </div>
+            <p>Style responsive, polished layouts and interfaces.</p>
+          </article>
+          <article class="skill-card">
+            <span class="skill-number">03</span>
+            <div class="skill-heading">
+              <svg class="language-icon" viewBox="0 0 48 48" role="img" aria-label="Python icon">
+                <path fill="#3776AB" d="M23.8 4c-10.2 0-9.6 4.4-9.6 4.4v4.6h9.8v1.5H10.3S4 13.8 4 24.1s5.5 9.9 5.5 9.9h3.3v-4.8s-.2-5.7 5.6-5.7h9.6s5.4.1 5.4-5.2V9.2S34.2 4 23.8 4zm-5.4 3.1a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"/>
+                <path fill="#FFD43B" d="M24.2 44c10.2 0 9.6-4.4 9.6-4.4V35h-9.8v-1.5h13.7S44 34.2 44 23.9s-5.5-9.9-5.5-9.9h-3.3v4.8s.2 5.7-5.6 5.7H20s-5.4-.1-5.4 5.2v9.1S13.8 44 24.2 44zm5.4-3.1a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6z"/>
+              </svg>
+              <h3>Python</h3>
+            </div>
+            <p>Build scripts, applications, and data-driven solutions.</p>
+          </article>
+          <article class="skill-card">
+            <span class="skill-number">04</span>
+            <div class="skill-heading">
+              <svg class="language-icon" viewBox="0 0 48 48" role="img" aria-label="JavaScript icon">
+                <rect x="4" y="4" width="40" height="40" rx="3" fill="#F7DF1E"/>
+                <path fill="#202124" d="M25.2 35.3c.8 1.3 1.8 2.2 3.6 2.2 1.5 0 2.4-.7 2.4-1.7 0-1.2-.9-1.6-2.6-2.3l-.9-.4c-2.6-1.1-4.3-2.4-4.3-5.2 0-2.6 2-4.6 5.2-4.6 2.2 0 3.8.8 4.9 2.9l-2.7 1.7c-.6-1.1-1.2-1.5-2.2-1.5-.9 0-1.5.6-1.5 1.3 0 .9.6 1.3 2.1 1.9l.9.4c3.1 1.3 4.8 2.5 4.8 5.4 0 3.1-2.4 4.8-5.7 4.8-3.2 0-5.2-1.5-6.2-3.6l2.2-1.3zM12.5 35.6c.6 1 1.1 1.9 2.4 1.9 1.2 0 1.9-.5 1.9-2.3V23.5h3.4v11.8c0 3.5-2.1 5.1-5.1 5.1-2.7 0-4.3-1.4-5.1-3.1l2.5-1.7z"/>
+              </svg>
+              <h3>JavaScript</h3>
+            </div>
+            <p>Create interactive experiences and dynamic web applications.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section certifications" id="certifications">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">Achievements</span>
+          <h2>Certifications</h2>
+        </header>
+
+        <div class="cert-grid">
+          <article class="cert-card">
+            <img class="cert-image" src="certiport.png" alt="Certification image">
+            <div class="cert-content">
+              <h3>Information Technology Specialist</h3>
+              <p>Certiport - 2026</p>
+            </div>
+          </article>
+          <article class="cert-card">
+            <img class="cert-image" src="upskill.png" alt="Certification imag">
+            <div class="cert-content">
+              <h3>Certificate Title</h3>
+              <p>Upskill Tech - 2026</p>
+            </div>
+          </article>
+          <article class="cert-card">
+            <img class="cert-image" src="wadwhani.png" alt="Certification image">
+            <div class="cert-content">
+              <h3>Wadwhani</h3>
+              <p>Wadwhani - 2026</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">Get In Touch</span>
+          <h2>Contact Me</h2>
+          <p>Share how people can reach you for opportunities, collaborations, or questions.</p>
+        </header>
+
+        <div class="contact-grid">
+          <aside class="contact-panel">
+            <h3>Contact Details</h3>
+            <div class="contact-details">
+              <div class="contact-item">
+                <span>Email</span>
+                <a href="mailto:your.email@example.com">zekkiel202@gmail.com</a>
+              </div>
+              <div class="contact-item">
+                <span>Phone</span>
+                <a href=>+63 939 3233 879</a>
+              </div>
+              <div class="contact-item">
+                <span>Location</span>
+                <p>Phillippines</p>
+              </div>
+            </div>
+          </aside>
+
+          <div class="contact-panel">
+            <form action="#" method="post">
+              <div class="form-row">
+                <label>
+                  Name
+                  <input type="text" name="name" placeholder="Your name">
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="email" placeholder="your.email@example.com">
+                </label>
+              </div>
+              <label>
+                Subject
+                <input type="text" name="subject" placeholder="How can I help?">
+              </label>
+              <label>
+                Message
+                <textarea name="message" placeholder="Write your message here"></textarea>
+              </label>
+              <button class="button" type="submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
